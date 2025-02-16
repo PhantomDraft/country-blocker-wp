@@ -1,4 +1,8 @@
-PD Country Blocker is designed to restrict access to your entire website or individual pages based on the visitor’s country. Its main features include:
+PD Country Blocker is designed to restrict access to your entire website or individual pages based on the visitor’s country.
+
+![PD Country Blocker is designed to restrict access to your entire website or individual pages based on the visitor’s country.](https://github.com/PhantomDraft/country-blocker-wp/blob/main/cover.png)
+
+Its main features include:
 
 - **Global Blocking by Country:**  
   The plugin allows you to specify a list of countries from which access is denied. If a visitor’s country matches one on the list, they are redirected to a designated page, or, if no redirect page is set, they receive an access restriction message.
