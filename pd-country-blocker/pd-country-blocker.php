@@ -1,6 +1,7 @@
 <?php
 /**
  * Plugin Name: PD Country Blocker
+ * Plugin URI: https://github.com/PhantomDraft/country-blocker-wp
  * Description: Blocks the entire site or individual pages based on countries.
  * Version:     1.1
  * Author:      PD
@@ -34,23 +35,28 @@ class PD_Country_Blocker {
      * Add settings menu.
      */
     public function add_admin_menu() {
-        add_menu_page(
-            'PD',                   // Title displayed in admin area
-            'PD',                   // Menu title
-            'manage_options',       // Capability required
-            'pd_main_menu',         // Slug of the main menu
-            '',                     // Function (empty because this is a container)
-            'dashicons-shield',     // Icon
-            2                       // Menu position
-        );
+        // Register global PD menu if not already registered
+        if ( ! defined( 'PD_GLOBAL_MENU_REGISTERED' ) ) {
+            add_menu_page(
+                'PD',                                // Title displayed in admin area
+                'PD',                                // Menu title
+                'manage_options',                    // Capability required
+                'pd_main_menu',                      // Global menu slug
+                'pd_global_menu_callback',           // Callback function for the global menu page
+                'dashicons-shield',                  // Shield icon
+                2                                    // Menu position
+            );
+            define( 'PD_GLOBAL_MENU_REGISTERED', true );
+        }
 
+        // Add PD Country Blocker as a submenu under the global PD menu
         add_submenu_page(
-            'pd_main_menu',         // Parent menu ("PD")
-            'PD Country Blocker',   // Page title
-            'PD Country Blocker',   // Menu title
-            'manage_options',       // Capability required
-            'pd_country_blocker',   // Slug of the settings page
-            [ $this, 'options_page_html' ] // Callback function to display the page
+            'pd_main_menu',                        // Parent menu slug
+            'PD Country Blocker',                  // Page title
+            'PD Country Blocker',                  // Menu title
+            'manage_options',                      // Capability required
+            'pd_country_blocker',                  // Slug of the settings page
+            [ $this, 'options_page_html' ]         // Callback function to display the page
         );
     }
 
@@ -358,6 +364,18 @@ class PD_Country_Blocker {
             }
         }
         return $rules;
+    }
+}
+
+if ( ! function_exists( 'pd_global_menu_callback' ) ) {
+    function pd_global_menu_callback() {
+        ?>
+        <div class="wrap">
+            <h1>PD Global Menu</h1>
+            <p>Please visit our GitHub page:</p>
+            <p><a href="https://github.com/PhantomDraft" target="_blank">https://github.com/PhantomDraft</a></p>
+        </div>
+        <?php
     }
 }
 
